@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 const Login = () => {
-  
+
   const navigate = useNavigate();
+  const {storetokenInLS} = useAuth()
 
   const [user, setUser] = useState({
     email: "",
@@ -33,6 +35,9 @@ const Login = () => {
         body: JSON.stringify(user),
       });
       if (response.ok) {
+        const res_data = await response.json();
+        storetokenInLS(res_data.token)
+
         alert("Login Successfull");
         setUser({
           email: "",

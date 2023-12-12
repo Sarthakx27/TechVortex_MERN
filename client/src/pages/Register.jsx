@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../store/auth";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -10,6 +11,7 @@ const Register = () => {
   });
 
   const navigate = useNavigate()
+  const {storetokenInLS} = useAuth()
 
   const handleInput = (e) => {
     let name = e.target.name;
