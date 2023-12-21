@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useAuth } from "../store/auth";
 
 const Contact = () => {
   const [contact, setContact] = useState({
@@ -7,6 +8,20 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
+  const [userData, setUserData] = useState(true);
+
+  const { user } = useAuth();
+
+  if (userData && user) {
+    setContact({
+      username: user.username,
+      email: user.email,
+      message: "",
+    });
+
+    setUserData(false);
+  }
 
   const handleInput = (e) => {
     let name = e.target.name;
@@ -23,8 +38,27 @@ const Contact = () => {
   //   [name]: value,                 2ND APPROACH====
   // }))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(contact),
+      });
+
+      if (response.ok) {
+        setContact({
+          message: "",
+        });
+        alert("Message sent!")
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

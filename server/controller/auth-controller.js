@@ -86,7 +86,7 @@ const login = async (req, res) => {
 const user = async (req, res) => {
   try {
     const userData = req.user
-    return res.status(200).json({msg:userData})
+    return res.status(200).json({userData})
   } catch (error) {
     console.log("err getting the users data from the user route",error);
   }

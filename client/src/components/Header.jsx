@@ -4,7 +4,7 @@ import "./Header.css";
 import { useAuth } from "../store/auth";
 
 const Header = () => {
-  const { isLoggedIn } = useAuth;
+  const { isLoggedIn } = useAuth()
   return (
     <div>
       <header>
@@ -27,7 +27,7 @@ const Header = () => {
               <li>
                 <NavLink to="/services">Services</NavLink>
               </li>
-              {!isLoggedIn ? (
+              {isLoggedIn ? (
                 <li>
                   <NavLink to="/logout">Logout</NavLink>
                 </li>
